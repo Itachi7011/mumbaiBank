@@ -83,6 +83,7 @@ import MyTransactionsSavingAccount from "./Components/CustomerPersonalDetails/Sa
 import MyLoansCurrentAccount from "./Components/CustomerPersonalDetails/CurrentAccount/MyLoansCurrentAccount";
 import MyFixedDepositCurrentAccount from "./Components/CustomerPersonalDetails/CurrentAccount/MyFixedDepositCurrentAccount";
 import MyTransactionsCurrentAccount from "./Components/CustomerPersonalDetails/CurrentAccount/MyTransactionsCurrentAccount.js";
+import InterestCalculator from "./Components/InterestCalculator/InterestCalculator.js";
 
 
 
@@ -130,6 +131,7 @@ function App() {
           <Route path="/CustomerLogin" element={<CustomerLogin />} > </Route>
           <Route path="/Logout" element={<Logout />} > </Route>
           <Route path="/GradeSystem" element={<GradeSystem />} > </Route>
+          <Route path="/InterestCalculator" element={<InterestCalculator />} > </Route>
 
 
           <Route path="/Scale1EmpProfile" element={<Scale1EmpProfile />} > </Route>
