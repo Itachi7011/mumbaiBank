@@ -55,18 +55,16 @@ const CustomerLogin = () => {
                 <h3> If not Registered Yet , Please visit <a href="/NewConsumerRegistration"> Signup Page </a> : </h3>
 
                 {/* Form Starts Here */}
-            <form action="/customerlogin" method="POST">
+            <form className="loginForm" action="/customerlogin" method="POST">
                 <div className="loginCSS">
                     <div class="mb-3 row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
-                        <input type="email" name="email" onChange={handleInput} class="form-control" id="inputPassword" placeholder="Please Enter Your Registered Email ID only" />
+                        <input type="email" name="email" onChange={handleInput} class="form-control loginFormInput" placeholder=" Email " />
                     </div>
 
                     <div class="mb-3 row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
-                        <input type="password" name="password" onChange={handleInput} class="form-control" id="inputPassword"/>
+                        <input type="password" name="password" onChange={handleInput} class="form-control loginFormInput"  placeholder=" Password "/>
                     </div>
 
                     
