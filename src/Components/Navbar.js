@@ -141,7 +141,9 @@ const Navbar = () => {
               </div>
             </div>
 
-
+            <NavLink className="nav-link" to="/InterestCalculator">
+            Interest Calculator
+            </NavLink>
 
             <NavLink className="nav-link" to="/Logout">
               Logout
@@ -233,6 +235,11 @@ const Navbar = () => {
             </div>
 
 
+            <NavLink className="nav-link" to="/InterestCalculator">
+            Interest Calculator
+            </NavLink>
+
+ 
 
             <NavLink className="nav-link" to="/Logout">
               Logout
@@ -415,6 +422,24 @@ const Navbar = () => {
             </div>
 
 
+            <NavLink className="nav-link" to="/InterestCalculator">
+            Interest Calculator
+            </NavLink>
+
+            <div class="dropdown">
+              <button class="dropbtn">
+              Compensations
+                <i class="fa fa-caret-down"></i>
+              </button>
+              <div class="dropdown-content">
+                <NavLink to="/FarmersCompensation">Farmers Compensations</NavLink>
+                <NavLink to="/PrivateJobCompensation">Private Jobs Compensations</NavLink>
+                <NavLink to="/DefenceForcesCompensation">Defence Forces (Active) Compensations</NavLink>
+                <NavLink to="/PensionHoldersCompensation">Pension Holders Compensations</NavLink>
+                <NavLink to="/GovtJobCompensation">Govt. Jobs Compensations</NavLink>
+
+              </div>
+            </div>
 
             <NavLink className="nav-link" to="/Logout">
               Logout
@@ -532,6 +557,11 @@ const Navbar = () => {
             </NavLink>
 
 
+            <NavLink className="nav-link" to="/InterestCalculator">
+            Interest Calculator
+            </NavLink>
+
+ 
 
             <NavLink className="nav-link" to="/Logout">
               Logout
@@ -558,6 +588,11 @@ const Navbar = () => {
             </NavLink>
 
 
+            <NavLink className="nav-link" to="/InterestCalculator">
+            Interest Calculator
+            </NavLink>
+
+ 
 
             <NavLink className="nav-link" to="/Logout">
               Logout
@@ -574,6 +609,13 @@ const Navbar = () => {
             <NavLink className="nav-link" to="/NewRegistration">
               SignUp
             </NavLink>
+
+
+            <NavLink className="nav-link" to="/InterestCalculator">
+            Interest Calculator
+            </NavLink>
+
+ 
 
 
           </>
