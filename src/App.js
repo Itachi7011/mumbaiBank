@@ -13,7 +13,7 @@ import Scale1Registration from "./Components/NewEmpRegistrations/Scale1Registrat
 import Scale2Registration from "./Components/NewEmpRegistrations/Scale2Registration";
 import Scale3Registration from "./Components/NewEmpRegistrations/Scale3Registration";
 import Scale4Registration from "./Components/NewEmpRegistrations/Scale4Registration";
-import TechnincalStaffRegistration from "./Components/TechnicalStaff/TechnicalStaffRegistration";
+import TechnincalStaffRegistration from "./Components/NewEmpRegistrations/TechnicalStaffRegistraiton.js";
 
 import RequestNewCurrentAccount from "./Components/NewConsumerRegistration/NewCurrentRegistration/RequestNewCurrentAccount";
 import RequestNewSavingAccount from "./Components/NewConsumerRegistration/NewSavingAccount/RequestNewSavingAccount";
@@ -85,7 +85,11 @@ import MyFixedDepositCurrentAccount from "./Components/CustomerPersonalDetails/C
 import MyTransactionsCurrentAccount from "./Components/CustomerPersonalDetails/CurrentAccount/MyTransactionsCurrentAccount.js";
 import InterestCalculator from "./Components/InterestCalculator/InterestCalculator.js";
 
-
+import FarmersCompensation from "./Components/Employee4SpecialCompensationPower/FarmersCompensation.js";
+import DefenceForcesCompensation from "./Components/Employee4SpecialCompensationPower/DefenceForcesCompensation.js";
+import GovtJobCompensation from "./Components/Employee4SpecialCompensationPower/GovtJobCompensation.js";
+import PensionHoldersCompensation from "./Components/Employee4SpecialCompensationPower/PensionHoldersCompensation.js";
+import PrivateJobCompensation from "./Components/Employee4SpecialCompensationPower/PrivateJobCompensation.js";
 
 
 
@@ -184,6 +188,13 @@ function App() {
           <Route path="/MyLoansCurrentAccount" element={<MyLoansCurrentAccount />} > </Route>
           <Route path="/MyFixedDepositCurrentAccount" element={<MyFixedDepositCurrentAccount />} > </Route>
           <Route path="/MyTransactionsCurrentAccount" element={<MyTransactionsCurrentAccount />} > </Route>
+
+
+          <Route path="/FarmersCompensation" element={<FarmersCompensation />} > </Route>
+          <Route path="/DefenceForcesCompensation" element={<DefenceForcesCompensation />} > </Route>
+          <Route path="/GovtJobCompensation" element={<GovtJobCompensation />} > </Route>
+          <Route path="/PensionHoldersCompensation" element={<PensionHoldersCompensation />} > </Route>
+          <Route path="/PrivateJobCompensation" element={<PrivateJobCompensation />} > </Route>
 
 
 
