@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createContext, useReducer } from "react";
 import {reducer, initialState} from "./reducers/UseReducer"
 
-
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import HomePage from "./Components/HomePage"
