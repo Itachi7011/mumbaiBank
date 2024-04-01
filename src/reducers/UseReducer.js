@@ -5,6 +5,6 @@ export const reducer = (state, action) => {
         return action.payload;
     }
 
-        return state;
+    return state;
         
 }
