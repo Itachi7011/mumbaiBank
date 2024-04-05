@@ -188,7 +188,7 @@ const RequestNewCurrentAccount = () => {
                         <h3> We might contact you for verification within 2 days from today and ask for more details. So please make sure that contact number and email is working fine. Also keep your documents ready for fast verification. </h3>
 
 
-                        <button type="submit" value="signUp" className="btn btn-primary btn-lg m-3" style={{ float: "right" }}>Add Request</button>
+                        <button type="submit" value="signUp" className="btn btn-primary btn-lg m-3" style={{ float: "right", fontSize:"large"  }}>Add Request</button>
 
 
                     </div>
