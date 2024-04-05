@@ -68,6 +68,37 @@ code {
   background-color: #F0F8FB;
   border-radius: 1rem;
 }
+.mainCalculatorDiv {
+  border: 2px solid black;
+  border-radius: 1rem;
+  background-color: #f0e2de;
+  margin: 1rem 5rem;
+  padding-bottom: 2rem;
+}
+.interestCalculatorInput {
+  height: 5vh;
+  width: 50%;
+  font-size: large;
+  margin-top: 1rem;
+}
+#interestCalculatorResult {
+  height: 5vh;
+  width: 50%;
+  background-color: #FF7518;
+  color: white;
+  font-size: larger;
+  padding-left: 2rem;
+  font-weight: bolder;
+  margin-top: 1rem;
+
+}
+.interestCalculationButton{
+  color: white;
+  background-color: blue;
+  padding: 1rem;
+  margin-top: 1rem;
+  margin-right: 30%;
+}
 
 @media only screen and (max-width: 600px) {
   body {
