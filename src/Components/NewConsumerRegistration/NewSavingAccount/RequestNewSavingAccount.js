@@ -166,7 +166,7 @@ const RequestNewSavingAccount = () => {
 
 
 
-                            <button type="submit" value="signUp" className="btn btn-primary btn-lg m-3" style={{ float: "right" }}>Add Request</button>
+                            <button type="submit" value="signUp" className="btn btn-primary btn-lg m-3" style={{ float: "right" , fontSize:"large" }}>Add Request</button>
 
 
                         </div>
