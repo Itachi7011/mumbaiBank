@@ -1,0 +1,67 @@
+.gridHomePage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.5fr 2fr 1fr 1fr;
+  row-gap: 0.4rem;
+  column-gap: 0.8rem;
+  background-color: #ffffff;
+  box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45),
+    25px 0px 20px -20px rgba(0, 0, 0, 0.45),
+    0px 25px 20px -20px rgba(0, 0, 0, 0.45),
+    -25px 0px 20px -20px rgba(0, 0, 0, 0.45);
+  justify-content: center;
+  align-content: center;
+}
+
+.gridHomePage1 {
+  background-color: #990011;
+  border-radius: 0.5rem;
+  color: #fcf6f5;
+  grid-column: 1/3;
+}
+
+.gridHomePage3 {
+  background-color: #f2f0eb;
+  color: #d3c5e5;
+  border-radius: 0.5rem;
+  grid-column: 1/3;
+}
+
+.gridHomePage5 {
+  background-color: #990011;
+  color: #d3c5e5;
+  border-radius: 0.5rem;
+
+
+}
+.gridHomePage6 {
+  background-color: #990011;
+  color: #d3c5e5;
+  border-radius: 0.5rem;
+}
+.gridHomePage7 {
+  background-color: #990011;
+  color: #d3c5e5;
+  border-radius: 0.5rem;
+}
+.gridHomePage8 {
+  background-color: #990011;
+  color: #d3c5e5;
+  border-radius: 0.5rem;
+}
+.homepagePara {
+  font-size: large;
+}
+.homePagebtn {
+  background-color: blue;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-size: large;
+}
+.homePagebtn a {
+  background-color: blue;
+  color: white;
+}
