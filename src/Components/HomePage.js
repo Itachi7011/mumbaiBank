@@ -76,10 +76,10 @@ const HomePage = () => {
               <h2>Open A New Fixed Deposit (FD) <br/> For Savings / Current Accounts<br /> At Good Interest Rate:</h2> <br />
               <button className="homePagebtn">
                 <a
-                  href="/RequestNewCurrentAccount"
+                  href="/SavingAccountNewFixedDepositForm"
                   style={{ textDecoration: "none" }}
                 >
-                  New Current Account
+                  New FD (Fixed Deposit) 
                 </a>
               </button>
             </p>
