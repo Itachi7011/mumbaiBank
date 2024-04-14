@@ -21,7 +21,6 @@ const ConfirmNewSavingAccountRequest = () => {
             console.log("data fetched successfully");
 
 
-
         }).catch((err) => { console.log(`Error during catch of setProfile -  ${err}`) })
 
         axios.get('/newSavingAccountRequest').then((response) => {
