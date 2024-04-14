@@ -15,7 +15,6 @@ const SavingAccounFixedDeposit = () => {
         axios.get('/empProfile').then(async (response) => {
             const data = await response.data;
 
-
             setProfile(data);
 
 
