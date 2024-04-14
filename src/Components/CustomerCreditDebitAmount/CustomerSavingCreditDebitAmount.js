@@ -18,7 +18,6 @@ const CustomerSavingCreditDebitAmount = () => {
 
             setProfile(data);
 
-
             console.log("data fetched successfully");
 
 
