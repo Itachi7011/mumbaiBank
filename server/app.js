@@ -362,48 +362,247 @@ app.post("/scale1EmpRegister", async (req, res) => {
 
 app.post("/scale2EmpRegister", async (req, res) => {
   try {
-    function getAge(dateString) {
-      var today = new Date();
-      var birthDate = new Date(dateString);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    }
-    const DateOfBirth = req.body.dateOfBirth;
+    const Password = req.body.password;
+    const Cpassword = req.body.cpassword;
+    const Email = req.body.email;
+    const PhoneNo_1 = req.body.phoneNo_1;
+    const PhoneNo_2 = req.body.phoneNo_2;
+    const jobAppointmentLetterNo = req.body.JobAppointmentLetterNo;
+    const AadharCardNumber = req.body.aadharCardNumber;
+    const PanNumber = req.body.panNumber;
 
-    const employeedata = await new Scale2EmployeesDB({
-      bankName: req.body.bankName,
-      bankBranch: req.body.bankBranch,
-      name: req.body.name,
-      email: req.body.email,
-      phoneNo_1: req.body.phoneNo_1,
-      phoneNo_2: req.body.phoneNo_2,
-      fatherName: req.body.fatherName,
-      dateOfBirth: req.body.dateOfBirth,
-      age: getAge(DateOfBirth),
-      JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
-      aadharCardNumber: req.body.aadharCardNumber,
-      panNumber: req.body.panNumber,
-      electionVoterIdNo: req.body.electionVoterIdNo,
-      country: req.body.country,
-      state: req.body.state,
-      district: req.body.district,
-      fullAddress: req.body.fullAddress,
-      qualification: req.body.qualification,
-      postDuringJoining: req.body.postDuringJoining,
-      basicSalary: req.body.basicSalary,
-      dateOfJoining: req.body.dateOfJoining,
-      password: req.body.password,
-      photograph: req.body.photograph,
+    // Already Used Emails
+
+    const UsedEmail1 = await Scale1EmployeesDB.findOne({ email: Email });
+    const UsedEmail2 = await Scale2EmployeesDB.findOne({ email: Email });
+    const UsedEmail3 = await Scale3EmployeesDB.findOne({ email: Email });
+    const UsedEmail4 = await Scale4EmployeesDB.findOne({ email: Email });
+    const UsedEmail5 = await Scale5EmployeesDB.findOne({ email: Email });
+    const UsedTechnicalStaffEmail = await technicalStaffDB.findOne({
+      email: Email,
     });
 
-    await employeedata.save();
-    console.log("Saved in Database Successfully");
-    alert("New Employee Registered Successfully! \n Please Login to Continue");
-    res.redirect("/EmployeeLogin");
+    // Already Used Phone Numbers
+
+    const UsedScale1PhoneNo_1 = await Scale1EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale1PhoneNo_2 = await Scale1EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale2PhoneNo_1 = await Scale2EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale2PhoneNo_2 = await Scale2EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale3PhoneNo_1 = await Scale3EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale3PhoneNo_2 = await Scale3EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale4PhoneNo_1 = await Scale4EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale4PhoneNo_2 = await Scale4EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale5PhoneNo_1 = await Scale5EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale5PhoneNo_2 = await Scale5EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedTechnicalStaffPhoneNo_1 = await technicalStaffDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedTechnicalStaffPhoneNo_2 = await technicalStaffDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    // Already Used Adhaar Card Numbers
+
+    const UsedScale1AdhaarNumber = await Scale1EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale2AdhaarNumber = await Scale2EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale3AdhaarNumber = await Scale3EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale4AdhaarNumber = await Scale4EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale5AdhaarNumber = await Scale5EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedTehcnicalStaffAdhaarNumber = await technicalStaffDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+
+    // Already Used PAN Card Numbers
+
+    const UsedScale1PanNumber = await Scale1EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale2PanNumber = await Scale2EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale3PanNumber = await Scale3EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale4PanNumber = await Scale4EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale5PanNumber = await Scale5EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedTehcnicalStaffPanNumber = await technicalStaffDB.findOne({
+      panNumber: PanNumber,
+    });
+
+    // Already Used Job Apointment Letter Number
+
+    const UsedScale1JobAppointmentLetterNo = await Scale1EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale2JobAppointmentLetterNo = await Scale2EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale3JobAppointmentLetterNo = await Scale3EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale4JobAppointmentLetterNo = await Scale4EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale5JobAppointmentLetterNo = await Scale5EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedTehcnicalStaffJobAppointmentLetterNo =
+      await technicalStaffDB.findOne({
+        JobAppointmentLetterNo: jobAppointmentLetterNo,
+      });
+
+    // Now acutal coding for registration
+    if (Password === Cpassword) {
+      if (UsedEmail1 || UsedEmail2 || UsedEmail3 || UsedEmail4 || UsedEmail5) {
+        alert("Sorry , This Email Id is already registered!");
+        console.log("Sorry , This Email Id is already registered!");
+      } else {
+        if (
+          UsedScale1PhoneNo_1 ||
+          UsedScale2PhoneNo_1 ||
+          UsedScale3PhoneNo_1 ||
+          UsedScale4PhoneNo_1 ||
+          UsedScale5PhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 1 is already registered! /n Please use another Phone Number."
+          );
+        } else if (
+          UsedScale1PhoneNo_2 ||
+          UsedScale2PhoneNo_2 ||
+          UsedScale3PhoneNo_2 ||
+          UsedScale4PhoneNo_2 ||
+          UsedScale5PhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 2 is already registered! /n Please use another Phone Number."
+          );
+        } else {
+          if (
+            UsedScale1AdhaarNumber ||
+            UsedScale2AdhaarNumber ||
+            UsedScale3AdhaarNumber ||
+            UsedScale4AdhaarNumber ||
+            UsedScale5AdhaarNumber ||
+            UsedTehcnicalStaffAdhaarNumber
+          ) {
+            alert(
+              "Sorry This Aadhar Number is already registered! /n Please use another Aadhar Number."
+            );
+          } else if (
+            UsedScale1PanNumber ||
+            UsedScale2PanNumber ||
+            UsedScale3PanNumber ||
+            UsedScale4PanNumber ||
+            UsedScale5PanNumber ||
+            UsedTehcnicalStaffPanNumber
+          ) {
+            alert(
+              "Sorry This PAN card number is already registered! /n Please use another PAN card Number."
+            );
+          } else if (
+            UsedScale1JobAppointmentLetterNo ||
+            UsedScale2JobAppointmentLetterNo ||
+            UsedScale3JobAppointmentLetterNo ||
+            UsedScale4JobAppointmentLetterNo ||
+            UsedScale5JobAppointmentLetterNo ||
+            UsedTehcnicalStaffJobAppointmentLetterNo
+          ) {
+            alert(
+              "Sorry This Job Appointment Letter is already registered! /n Please contact Hiring Department of our Bank, if it is your genuine concern."
+            );
+          } else {
+            function getAge(dateString) {
+              var today = new Date();
+              var birthDate = new Date(dateString);
+              var age = today.getFullYear() - birthDate.getFullYear();
+              var m = today.getMonth() - birthDate.getMonth();
+              if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+              }
+              return age;
+            }
+            const DateOfBirth = req.body.dateOfBirth;
+
+            const employeedata = await new Scale2EmployeesDB({
+              bankName: req.body.bankName,
+              bankBranch: req.body.bankBranch,
+              name: req.body.name,
+              email: req.body.email,
+              phoneNo_1: req.body.phoneNo_1,
+              phoneNo_2: req.body.phoneNo_2,
+              fatherName: req.body.fatherName,
+              dateOfBirth: req.body.dateOfBirth,
+              age: getAge(DateOfBirth),
+              JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
+              aadharCardNumber: req.body.aadharCardNumber,
+              panNumber: req.body.panNumber,
+              electionVoterIdNo: req.body.electionVoterIdNo,
+              country: req.body.country,
+              state: req.body.state,
+              district: req.body.district,
+              fullAddress: req.body.fullAddress,
+              qualification: req.body.qualification,
+              postDuringJoining: req.body.postDuringJoining,
+              basicSalary: req.body.basicSalary,
+              dateOfJoining: req.body.dateOfJoining,
+              password: req.body.password,
+              photograph: req.body.photograph,
+            });
+
+            await employeedata.save();
+            console.log("Saved in Database Successfully");
+            alert(
+              "New Employee Registered Successfully! \n Please Login to Continue"
+            );
+            res.redirect("/EmployeeLogin");
+          } // Main registered Funtions ends at end here.
+        }
+      }
+    } else {
+      alert("Sorry! Password And Confirm Passwords do not match.");
+    }
   } catch (err) {
     console.log(`Error during Registering scale_2Employee --> 
             ${err}`);
@@ -412,49 +611,248 @@ app.post("/scale2EmpRegister", async (req, res) => {
 
 app.post("/scale3EmpRegister", async (req, res) => {
   try {
-    const DateOfBirth = req.body.dateOfBirth;
+    const Password = req.body.Password;
+    const Cpassword = req.body.cpassword;
+    const Email = req.body.email;
+    const PhoneNo_1 = req.body.phoneNo_1;
+    const PhoneNo_2 = req.body.phoneNo_2;
+    const jobAppointmentLetterNo = req.body.JobAppointmentLetterNo;
+    const AadharCardNumber = req.body.aadharCardNumber;
+    const PanNumber = req.body.panNumber;
 
-    function getAge(dateString) {
-      var today = new Date();
-      var birthDate = new Date(dateString);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    }
+    // Already Used Emails
 
-    const employeedata = await new Scale3EmployeesDB({
-      bankName: req.body.bankName,
-      bankBranch: req.body.bankBranch,
-      name: req.body.name,
-      email: req.body.email,
-      phoneNo_1: req.body.phoneNo_1,
-      phoneNo_2: req.body.phoneNo_2,
-      fatherName: req.body.fatherName,
-      dateOfBirth: req.body.dateOfBirth,
-      age: getAge(DateOfBirth),
-      JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
-      aadharCardNumber: req.body.aadharCardNumber,
-      panNumber: req.body.panNumber,
-      electionVoterIdNo: req.body.electionVoterIdNo,
-      country: req.body.country,
-      state: req.body.state,
-      district: req.body.district,
-      fullAddress: req.body.fullAddress,
-      qualification: req.body.qualification,
-      postDuringJoining: req.body.postDuringJoining,
-      basicSalary: req.body.basicSalary,
-      dateOfJoining: req.body.dateOfJoining,
-      password: req.body.password,
-      photograph: req.body.photograph,
+    const UsedEmail1 = await Scale1EmployeesDB.findOne({ email: Email });
+    const UsedEmail2 = await Scale2EmployeesDB.findOne({ email: Email });
+    const UsedEmail3 = await Scale3EmployeesDB.findOne({ email: Email });
+    const UsedEmail4 = await Scale4EmployeesDB.findOne({ email: Email });
+    const UsedEmail5 = await Scale5EmployeesDB.findOne({ email: Email });
+    const UsedTechnicalStaffEmail = await technicalStaffDB.findOne({
+      email: Email,
     });
 
-    await employeedata.save();
-    console.log("Saved in Database Successfully");
-    alert("New Employee Registered Successfully! \n Please Login to Continue");
-    res.redirect("/Login");
+    // Already Used Phone Numbers
+
+    const UsedScale1PhoneNo_1 = await Scale1EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale1PhoneNo_2 = await Scale1EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale2PhoneNo_1 = await Scale2EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale2PhoneNo_2 = await Scale2EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale3PhoneNo_1 = await Scale3EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale3PhoneNo_2 = await Scale3EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale4PhoneNo_1 = await Scale4EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale4PhoneNo_2 = await Scale4EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale5PhoneNo_1 = await Scale5EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale5PhoneNo_2 = await Scale5EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedTechnicalStaffPhoneNo_1 = await technicalStaffDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedTechnicalStaffPhoneNo_2 = await technicalStaffDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    // Already Used Adhaar Card Numbers
+
+    const UsedScale1AdhaarNumber = await Scale1EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale2AdhaarNumber = await Scale2EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale3AdhaarNumber = await Scale3EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale4AdhaarNumber = await Scale4EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale5AdhaarNumber = await Scale5EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedTehcnicalStaffAdhaarNumber = await technicalStaffDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+
+    // Already Used PAN Card Numbers
+
+    const UsedScale1PanNumber = await Scale1EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale2PanNumber = await Scale2EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale3PanNumber = await Scale3EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale4PanNumber = await Scale4EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale5PanNumber = await Scale5EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedTehcnicalStaffPanNumber = await technicalStaffDB.findOne({
+      panNumber: PanNumber,
+    });
+
+    // Already Used Job Apointment Letter Number
+
+    const UsedScale1JobAppointmentLetterNo = await Scale1EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale2JobAppointmentLetterNo = await Scale2EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale3JobAppointmentLetterNo = await Scale3EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale4JobAppointmentLetterNo = await Scale4EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale5JobAppointmentLetterNo = await Scale5EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedTehcnicalStaffJobAppointmentLetterNo =
+      await technicalStaffDB.findOne({
+        JobAppointmentLetterNo: jobAppointmentLetterNo,
+      });
+
+    // Now acutal coding for registration
+    if (Password === Cpassword) {
+      if (UsedEmail1 || UsedEmail2 || UsedEmail3 || UsedEmail4 || UsedEmail5) {
+        alert("Sorry , This Email Id is already registered!");
+        console.log("Sorry , This Email Id is already registered!");
+      } else {
+        if (
+          UsedScale1PhoneNo_1 ||
+          UsedScale2PhoneNo_1 ||
+          UsedScale3PhoneNo_1 ||
+          UsedScale4PhoneNo_1 ||
+          UsedScale5PhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 1 is already registered! /n Please use another Phone Number."
+          );
+        } else if (
+          UsedScale1PhoneNo_2 ||
+          UsedScale2PhoneNo_2 ||
+          UsedScale3PhoneNo_2 ||
+          UsedScale4PhoneNo_2 ||
+          UsedScale5PhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 2 is already registered! /n Please use another Phone Number."
+          );
+        } else {
+          if (
+            UsedScale1AdhaarNumber ||
+            UsedScale2AdhaarNumber ||
+            UsedScale3AdhaarNumber ||
+            UsedScale4AdhaarNumber ||
+            UsedScale5AdhaarNumber ||
+            UsedTehcnicalStaffAdhaarNumber
+          ) {
+            alert(
+              "Sorry This Aadhar Number is already registered! /n Please use another Aadhar Number."
+            );
+          } else if (
+            UsedScale1PanNumber ||
+            UsedScale2PanNumber ||
+            UsedScale3PanNumber ||
+            UsedScale4PanNumber ||
+            UsedScale5PanNumber ||
+            UsedTehcnicalStaffPanNumber
+          ) {
+            alert(
+              "Sorry This PAN card number is already registered! /n Please use another PAN card Number."
+            );
+          } else if (
+            UsedScale1JobAppointmentLetterNo ||
+            UsedScale2JobAppointmentLetterNo ||
+            UsedScale3JobAppointmentLetterNo ||
+            UsedScale4JobAppointmentLetterNo ||
+            UsedScale5JobAppointmentLetterNo ||
+            UsedTehcnicalStaffJobAppointmentLetterNo
+          ) {
+            alert(
+              "Sorry This Job Appointment Letter is already registered! /n Please contact Hiring Department of our Bank, if it is your genuine concern."
+            );
+          } else {
+            const DateOfBirth = req.body.dateOfBirth;
+
+            function getAge(dateString) {
+              var today = new Date();
+              var birthDate = new Date(dateString);
+              var age = today.getFullYear() - birthDate.getFullYear();
+              var m = today.getMonth() - birthDate.getMonth();
+              if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+              }
+              return age;
+            }
+
+            const employeedata = await new Scale3EmployeesDB({
+              bankName: req.body.bankName,
+              bankBranch: req.body.bankBranch,
+              name: req.body.name,
+              email: req.body.email,
+              phoneNo_1: req.body.phoneNo_1,
+              phoneNo_2: req.body.phoneNo_2,
+              fatherName: req.body.fatherName,
+              dateOfBirth: req.body.dateOfBirth,
+              age: getAge(DateOfBirth),
+              JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
+              aadharCardNumber: req.body.aadharCardNumber,
+              panNumber: req.body.panNumber,
+              electionVoterIdNo: req.body.electionVoterIdNo,
+              country: req.body.country,
+              state: req.body.state,
+              district: req.body.district,
+              fullAddress: req.body.fullAddress,
+              qualification: req.body.qualification,
+              postDuringJoining: req.body.postDuringJoining,
+              basicSalary: req.body.basicSalary,
+              dateOfJoining: req.body.dateOfJoining,
+              password: req.body.password,
+              photograph: req.body.photograph,
+            });
+
+            await employeedata.save();
+            console.log("Saved in Database Successfully");
+            alert(
+              "New Employee Registered Successfully! \n Please Login to Continue"
+            );
+            res.redirect("/Login");
+          } // Main registered Funtions ends at end here.
+        }
+      }
+    } else {
+      alert("Sorry! Password And Confirm Passwords do not match.");
+    }
   } catch (err) {
     console.log(`Error during Registering scale_1Employee --> 
             ${err}`);
@@ -463,48 +861,247 @@ app.post("/scale3EmpRegister", async (req, res) => {
 
 app.post("/scale4EmpRegister", async (req, res) => {
   try {
-    const DateOfBirth = req.body.dateOfBirth;
-    function getAge(dateString) {
-      var today = new Date();
-      var birthDate = new Date(dateString);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    }
+    const Password = req.body.password;
+    const Cpassword = req.body.cpassword;
+    const Email = req.body.email;
+    const PhoneNo_1 = req.body.phoneNo_1;
+    const PhoneNo_2 = req.body.phoneNo_2;
+    const jobAppointmentLetterNo = req.body.JobAppointmentLetterNo;
+    const AadharCardNumber = req.body.aadharCardNumber;
+    const PanNumber = req.body.panNumber;
 
-    const employeedata = await new Scale4EmployeesDB({
-      bankName: req.body.bankName,
-      bankBranch: req.body.bankBranch,
-      name: req.body.name,
-      email: req.body.email,
-      phoneNo_1: req.body.phoneNo_1,
-      phoneNo_2: req.body.phoneNo_2,
-      fatherName: req.body.fatherName,
-      qualification: req.body.qualification,
-      dateOfBirth: req.body.dateOfBirth,
-      age: getAge(DateOfBirth),
-      JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
-      aadharCardNumber: req.body.aadharCardNumber,
-      panNumber: req.body.panNumber,
-      electionVoterIdNo: req.body.electionVoterIdNo,
-      country: req.body.country,
-      state: req.body.state,
-      district: req.body.district,
-      fullAddress: req.body.fullAddress,
-      postDuringJoining: req.body.postDuringJoining,
-      basicSalary: req.body.basicSalary,
-      dateOfJoining: req.body.dateOfJoining,
-      password: req.body.password,
-      photograph: req.body.photograph,
+    // Already Used Emails
+
+    const UsedEmail1 = await Scale1EmployeesDB.findOne({ email: Email });
+    const UsedEmail2 = await Scale2EmployeesDB.findOne({ email: Email });
+    const UsedEmail3 = await Scale3EmployeesDB.findOne({ email: Email });
+    const UsedEmail4 = await Scale4EmployeesDB.findOne({ email: Email });
+    const UsedEmail5 = await Scale5EmployeesDB.findOne({ email: Email });
+    const UsedTechnicalStaffEmail = await technicalStaffDB.findOne({
+      email: Email,
     });
 
-    await employeedata.save();
-    console.log("Saved in Database Successfully");
-    alert("New Employee Registered Successfully! \n Please Login to Continue");
-    res.redirect("/EmployeeLogin");
+    // Already Used Phone Numbers
+
+    const UsedScale1PhoneNo_1 = await Scale1EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale1PhoneNo_2 = await Scale1EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale2PhoneNo_1 = await Scale2EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale2PhoneNo_2 = await Scale2EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale3PhoneNo_1 = await Scale3EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale3PhoneNo_2 = await Scale3EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale4PhoneNo_1 = await Scale4EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale4PhoneNo_2 = await Scale4EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale5PhoneNo_1 = await Scale5EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale5PhoneNo_2 = await Scale5EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedTechnicalStaffPhoneNo_1 = await technicalStaffDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedTechnicalStaffPhoneNo_2 = await technicalStaffDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    // Already Used Adhaar Card Numbers
+
+    const UsedScale1AdhaarNumber = await Scale1EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale2AdhaarNumber = await Scale2EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale3AdhaarNumber = await Scale3EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale4AdhaarNumber = await Scale4EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale5AdhaarNumber = await Scale5EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedTehcnicalStaffAdhaarNumber = await technicalStaffDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+
+    // Already Used PAN Card Numbers
+
+    const UsedScale1PanNumber = await Scale1EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale2PanNumber = await Scale2EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale3PanNumber = await Scale3EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale4PanNumber = await Scale4EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale5PanNumber = await Scale5EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedTehcnicalStaffPanNumber = await technicalStaffDB.findOne({
+      panNumber: PanNumber,
+    });
+
+    // Already Used Job Apointment Letter Number
+
+    const UsedScale1JobAppointmentLetterNo = await Scale1EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale2JobAppointmentLetterNo = await Scale2EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale3JobAppointmentLetterNo = await Scale3EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale4JobAppointmentLetterNo = await Scale4EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale5JobAppointmentLetterNo = await Scale5EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedTehcnicalStaffJobAppointmentLetterNo =
+      await technicalStaffDB.findOne({
+        JobAppointmentLetterNo: jobAppointmentLetterNo,
+      });
+
+    // Now acutal coding for registration
+    if (Password === Cpassword) {
+      if (UsedEmail1 || UsedEmail2 || UsedEmail3 || UsedEmail4 || UsedEmail5) {
+        alert("Sorry , This Email Id is already registered!");
+        console.log("Sorry , This Email Id is already registered!");
+      } else {
+        if (
+          UsedScale1PhoneNo_1 ||
+          UsedScale2PhoneNo_1 ||
+          UsedScale3PhoneNo_1 ||
+          UsedScale4PhoneNo_1 ||
+          UsedScale5PhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 1 is already registered! /n Please use another Phone Number."
+          );
+        } else if (
+          UsedScale1PhoneNo_2 ||
+          UsedScale2PhoneNo_2 ||
+          UsedScale3PhoneNo_2 ||
+          UsedScale4PhoneNo_2 ||
+          UsedScale5PhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 2 is already registered! /n Please use another Phone Number."
+          );
+        } else {
+          if (
+            UsedScale1AdhaarNumber ||
+            UsedScale2AdhaarNumber ||
+            UsedScale3AdhaarNumber ||
+            UsedScale4AdhaarNumber ||
+            UsedScale5AdhaarNumber ||
+            UsedTehcnicalStaffAdhaarNumber
+          ) {
+            alert(
+              "Sorry This Aadhar Number is already registered! /n Please use another Aadhar Number."
+            );
+          } else if (
+            UsedScale1PanNumber ||
+            UsedScale2PanNumber ||
+            UsedScale3PanNumber ||
+            UsedScale4PanNumber ||
+            UsedScale5PanNumber ||
+            UsedTehcnicalStaffPanNumber
+          ) {
+            alert(
+              "Sorry This PAN card number is already registered! /n Please use another PAN card Number."
+            );
+          } else if (
+            UsedScale1JobAppointmentLetterNo ||
+            UsedScale2JobAppointmentLetterNo ||
+            UsedScale3JobAppointmentLetterNo ||
+            UsedScale4JobAppointmentLetterNo ||
+            UsedScale5JobAppointmentLetterNo ||
+            UsedTehcnicalStaffJobAppointmentLetterNo
+          ) {
+            alert(
+              "Sorry This Job Appointment Letter is already registered! /n Please contact Hiring Department of our Bank, if it is your genuine concern."
+            );
+          } else {
+            const DateOfBirth = req.body.dateOfBirth;
+            function getAge(dateString) {
+              var today = new Date();
+              var birthDate = new Date(dateString);
+              var age = today.getFullYear() - birthDate.getFullYear();
+              var m = today.getMonth() - birthDate.getMonth();
+              if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+              }
+              return age;
+            }
+
+            const employeedata = await new Scale4EmployeesDB({
+              bankName: req.body.bankName,
+              bankBranch: req.body.bankBranch,
+              name: req.body.name,
+              email: req.body.email,
+              phoneNo_1: req.body.phoneNo_1,
+              phoneNo_2: req.body.phoneNo_2,
+              fatherName: req.body.fatherName,
+              qualification: req.body.qualification,
+              dateOfBirth: req.body.dateOfBirth,
+              age: getAge(DateOfBirth),
+              JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
+              aadharCardNumber: req.body.aadharCardNumber,
+              panNumber: req.body.panNumber,
+              electionVoterIdNo: req.body.electionVoterIdNo,
+              country: req.body.country,
+              state: req.body.state,
+              district: req.body.district,
+              fullAddress: req.body.fullAddress,
+              postDuringJoining: req.body.postDuringJoining,
+              basicSalary: req.body.basicSalary,
+              dateOfJoining: req.body.dateOfJoining,
+              password: req.body.password,
+              photograph: req.body.photograph,
+            });
+
+            await employeedata.save();
+            console.log("Saved in Database Successfully");
+            alert(
+              "New Employee Registered Successfully! \n Please Login to Continue"
+            );
+            res.redirect("/EmployeeLogin");
+          } // Main registered Funtions ends at end here.
+        }
+      }
+    } else {
+      alert("Sorry! Password And Confirm Passwords do not match.");
+    }
   } catch (err) {
     console.log(`Error during Registering scale_1Employee --> 
             ${err}`);
@@ -513,98 +1110,247 @@ app.post("/scale4EmpRegister", async (req, res) => {
 
 app.post("/scale5EmpRegister", async (req, res) => {
   try {
-    const DateOfBirth = req.body.dateOfBirth;
-    function getAge(dateString) {
-      var today = new Date();
-      var birthDate = new Date(dateString);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    }
+    const Password = req.body.password;
+    const Cpassword = req.body.cpassword;
+    const Email = req.body.email;
+    const PhoneNo_1 = req.body.phoneNo_1;
+    const PhoneNo_2 = req.body.phoneNo_2;
+    const jobAppointmentLetterNo = req.body.JobAppointmentLetterNo;
+    const AadharCardNumber = req.body.aadharCardNumber;
+    const PanNumber = req.body.panNumber;
 
-    const employeedata = await new Scale5EmployeesDB({
-      bankName: req.body.bankName,
-      bankBranch: req.body.bankBranch,
-      name: req.body.name,
-      email: req.body.email,
-      phoneNo_1: req.body.phoneNo_1,
-      phoneNo_2: req.body.phoneNo_2,
-      fatherName: req.body.fatherName,
-      qualification: req.body.qualification,
-      dateOfBirth: req.body.dateOfBirth,
-      age: getAge(DateOfBirth),
-      JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
-      aadharCardNumber: req.body.aadharCardNumber,
-      panNumber: req.body.panNumber,
-      electionVoterIdNo: req.body.electionVoterIdNo,
-      country: req.body.country,
-      state: req.body.state,
-      district: req.body.district,
-      fullAddress: req.body.fullAddress,
-      postDuringJoining: req.body.postDuringJoining,
-      basicSalary: req.body.basicSalary,
-      dateOfJoining: req.body.dateOfJoining,
-      password: req.body.password,
-      photograph: req.body.photograph,
+    // Already Used Emails
+
+    const UsedEmail1 = await Scale1EmployeesDB.findOne({ email: Email });
+    const UsedEmail2 = await Scale2EmployeesDB.findOne({ email: Email });
+    const UsedEmail3 = await Scale3EmployeesDB.findOne({ email: Email });
+    const UsedEmail4 = await Scale4EmployeesDB.findOne({ email: Email });
+    const UsedEmail5 = await Scale5EmployeesDB.findOne({ email: Email });
+    const UsedTechnicalStaffEmail = await technicalStaffDB.findOne({
+      email: Email,
     });
 
-    await employeedata.save();
-    console.log("Saved in Database Successfully");
-    alert("New Employee Registered Successfully! \n Please Login to Continue");
-    res.redirect("/Login");
-  } catch (err) {
-    console.log(`Error during Registering scale_1Employee --> 
-            ${err}`);
-  }
-});
+    // Already Used Phone Numbers
 
-app.post("/scale5EmpRegister", async (req, res) => {
-  try {
-    const DateOfBirth = req.body.dateOfBirth;
-    function getAge(dateString) {
-      var today = new Date();
-      var birthDate = new Date(dateString);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    }
-
-    const employeedata = await new technicalStaffDB({
-      bankName: req.body.bankName,
-      bankBranch: req.body.bankBranch,
-      name: req.body.name,
-      email: req.body.email,
-      phoneNo_1: req.body.phoneNo_1,
-      phoneNo_2: req.body.phoneNo_2,
-      fatherName: req.body.fatherName,
-      qualification: req.body.qualification,
-      dateOfBirth: req.body.dateOfBirth,
-      age: getAge(DateOfBirth),
-      JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
-      aadharCardNumber: req.body.aadharCardNumber,
-      panNumber: req.body.panNumber,
-      electionVoterIdNo: req.body.electionVoterIdNo,
-      country: req.body.country,
-      state: req.body.state,
-      district: req.body.district,
-      fullAddress: req.body.fullAddress,
-      postDuringJoining: req.body.postDuringJoining,
-      basicSalary: req.body.basicSalary,
-      dateOfJoining: req.body.dateOfJoining,
-      password: req.body.password,
-      photograph: req.body.photograph,
+    const UsedScale1PhoneNo_1 = await Scale1EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale1PhoneNo_2 = await Scale1EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
     });
 
-    await employeedata.save();
-    console.log("Saved in Database Successfully");
-    alert("New Employee Registered Successfully! \n Please Login to Continue");
-    res.redirect("/EmployeeLogin");
+    const UsedScale2PhoneNo_1 = await Scale2EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale2PhoneNo_2 = await Scale2EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale3PhoneNo_1 = await Scale3EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale3PhoneNo_2 = await Scale3EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale4PhoneNo_1 = await Scale4EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale4PhoneNo_2 = await Scale4EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale5PhoneNo_1 = await Scale5EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale5PhoneNo_2 = await Scale5EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedTechnicalStaffPhoneNo_1 = await technicalStaffDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedTechnicalStaffPhoneNo_2 = await technicalStaffDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    // Already Used Adhaar Card Numbers
+
+    const UsedScale1AdhaarNumber = await Scale1EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale2AdhaarNumber = await Scale2EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale3AdhaarNumber = await Scale3EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale4AdhaarNumber = await Scale4EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale5AdhaarNumber = await Scale5EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedTehcnicalStaffAdhaarNumber = await technicalStaffDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+
+    // Already Used PAN Card Numbers
+
+    const UsedScale1PanNumber = await Scale1EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale2PanNumber = await Scale2EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale3PanNumber = await Scale3EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale4PanNumber = await Scale4EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale5PanNumber = await Scale5EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedTehcnicalStaffPanNumber = await technicalStaffDB.findOne({
+      panNumber: PanNumber,
+    });
+
+    // Already Used Job Apointment Letter Number
+
+    const UsedScale1JobAppointmentLetterNo = await Scale1EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale2JobAppointmentLetterNo = await Scale2EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale3JobAppointmentLetterNo = await Scale3EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale4JobAppointmentLetterNo = await Scale4EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale5JobAppointmentLetterNo = await Scale5EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedTehcnicalStaffJobAppointmentLetterNo =
+      await technicalStaffDB.findOne({
+        JobAppointmentLetterNo: jobAppointmentLetterNo,
+      });
+
+    // Now acutal coding for registration
+    if (Password === Cpassword) {
+      if (UsedEmail1 || UsedEmail2 || UsedEmail3 || UsedEmail4 || UsedEmail5) {
+        alert("Sorry , This Email Id is already registered!");
+        console.log("Sorry , This Email Id is already registered!");
+      } else {
+        if (
+          UsedScale1PhoneNo_1 ||
+          UsedScale2PhoneNo_1 ||
+          UsedScale3PhoneNo_1 ||
+          UsedScale4PhoneNo_1 ||
+          UsedScale5PhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 1 is already registered! /n Please use another Phone Number."
+          );
+        } else if (
+          UsedScale1PhoneNo_2 ||
+          UsedScale2PhoneNo_2 ||
+          UsedScale3PhoneNo_2 ||
+          UsedScale4PhoneNo_2 ||
+          UsedScale5PhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 2 is already registered! /n Please use another Phone Number."
+          );
+        } else {
+          if (
+            UsedScale1AdhaarNumber ||
+            UsedScale2AdhaarNumber ||
+            UsedScale3AdhaarNumber ||
+            UsedScale4AdhaarNumber ||
+            UsedScale5AdhaarNumber ||
+            UsedTehcnicalStaffAdhaarNumber
+          ) {
+            alert(
+              "Sorry This Aadhar Number is already registered! /n Please use another Aadhar Number."
+            );
+          } else if (
+            UsedScale1PanNumber ||
+            UsedScale2PanNumber ||
+            UsedScale3PanNumber ||
+            UsedScale4PanNumber ||
+            UsedScale5PanNumber ||
+            UsedTehcnicalStaffPanNumber
+          ) {
+            alert(
+              "Sorry This PAN card number is already registered! /n Please use another PAN card Number."
+            );
+          } else if (
+            UsedScale1JobAppointmentLetterNo ||
+            UsedScale2JobAppointmentLetterNo ||
+            UsedScale3JobAppointmentLetterNo ||
+            UsedScale4JobAppointmentLetterNo ||
+            UsedScale5JobAppointmentLetterNo ||
+            UsedTehcnicalStaffJobAppointmentLetterNo
+          ) {
+            alert(
+              "Sorry This Job Appointment Letter is already registered! /n Please contact Hiring Department of our Bank, if it is your genuine concern."
+            );
+          } else {
+            const DateOfBirth = req.body.dateOfBirth;
+            function getAge(dateString) {
+              var today = new Date();
+              var birthDate = new Date(dateString);
+              var age = today.getFullYear() - birthDate.getFullYear();
+              var m = today.getMonth() - birthDate.getMonth();
+              if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+              }
+              return age;
+            }
+
+            const employeedata = await new Scale5EmployeesDB({
+              bankName: req.body.bankName,
+              bankBranch: req.body.bankBranch,
+              name: req.body.name,
+              email: req.body.email,
+              phoneNo_1: req.body.phoneNo_1,
+              phoneNo_2: req.body.phoneNo_2,
+              fatherName: req.body.fatherName,
+              qualification: req.body.qualification,
+              dateOfBirth: req.body.dateOfBirth,
+              age: getAge(DateOfBirth),
+              JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
+              aadharCardNumber: req.body.aadharCardNumber,
+              panNumber: req.body.panNumber,
+              electionVoterIdNo: req.body.electionVoterIdNo,
+              country: req.body.country,
+              state: req.body.state,
+              district: req.body.district,
+              fullAddress: req.body.fullAddress,
+              postDuringJoining: req.body.postDuringJoining,
+              basicSalary: req.body.basicSalary,
+              dateOfJoining: req.body.dateOfJoining,
+              password: req.body.password,
+              photograph: req.body.photograph,
+            });
+
+            await employeedata.save();
+            console.log("Saved in Database Successfully");
+            alert(
+              "New Employee Registered Successfully! \n Please Login to Continue"
+            );
+            res.redirect("/Login");
+          } // Main registered Funtions ends at end here.
+        }
+      }
+    } else {
+      alert("Sorry! Password And Confirm Passwords do not match.");
+    }
   } catch (err) {
     console.log(`Error during Registering scale_1Employee --> 
             ${err}`);
@@ -613,48 +1359,247 @@ app.post("/scale5EmpRegister", async (req, res) => {
 
 app.post("/technicalStaffRegister", async (req, res) => {
   try {
-    const DateOfBirth = req.body.dateOfBirth;
-    function getAge(dateString) {
-      var today = new Date();
-      var birthDate = new Date(dateString);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      return age;
-    }
+    const Password = req.body.password;
+    const Cpassword = req.body.cpassword;
+    const Email = req.body.email;
+    const PhoneNo_1 = req.body.phoneNo_1;
+    const PhoneNo_2 = req.body.phoneNo_2;
+    const jobAppointmentLetterNo = req.body.JobAppointmentLetterNo;
+    const AadharCardNumber = req.body.aadharCardNumber;
+    const PanNumber = req.body.panNumber;
 
-    const employeedata = await new technicalStaffDB({
-      bankName: req.body.bankName,
-      bankBranch: req.body.bankBranch,
-      name: req.body.name,
-      email: req.body.email,
-      phoneNo_1: req.body.phoneNo_1,
-      phoneNo_2: req.body.phoneNo_2,
-      fatherName: req.body.fatherName,
-      dateOfBirth: req.body.dateOfBirth,
-      age: getAge(DateOfBirth),
-      companyName: req.body.companyName,
-      JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
-      aadharCardNumber: req.body.aadharCardNumber,
-      panNumber: req.body.panNumber,
-      electionVoterIdNo: req.body.electionVoterIdNo,
-      country: req.body.country,
-      state: req.body.state,
-      district: req.body.district,
-      fullAddress: req.body.fullAddress,
-      postDuringJoining: req.body.postDuringJoining,
-      basicSalary: req.body.basicSalary,
-      dateOfJoining: req.body.dateOfJoining,
-      password: req.body.password,
-      photograph: req.body.photograph,
+    // Already Used Emails
+
+    const UsedEmail1 = await Scale1EmployeesDB.findOne({ email: Email });
+    const UsedEmail2 = await Scale2EmployeesDB.findOne({ email: Email });
+    const UsedEmail3 = await Scale3EmployeesDB.findOne({ email: Email });
+    const UsedEmail4 = await Scale4EmployeesDB.findOne({ email: Email });
+    const UsedEmail5 = await Scale5EmployeesDB.findOne({ email: Email });
+    const UsedTechnicalStaffEmail = await technicalStaffDB.findOne({
+      email: Email,
     });
 
-    await employeedata.save();
-    console.log("Saved in Database Successfully");
-    alert("New Employee Registered Successfully! \n Please Login to Continue");
-    res.redirect("/EmployeeLogin");
+    // Already Used Phone Numbers
+
+    const UsedScale1PhoneNo_1 = await Scale1EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale1PhoneNo_2 = await Scale1EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale2PhoneNo_1 = await Scale2EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale2PhoneNo_2 = await Scale2EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale3PhoneNo_1 = await Scale3EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale3PhoneNo_2 = await Scale3EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale4PhoneNo_1 = await Scale4EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale4PhoneNo_2 = await Scale4EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedScale5PhoneNo_1 = await Scale5EmployeesDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedScale5PhoneNo_2 = await Scale5EmployeesDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    const UsedTechnicalStaffPhoneNo_1 = await technicalStaffDB.findOne({
+      phoneNo_1: PhoneNo_1,
+    });
+    const UsedTechnicalStaffPhoneNo_2 = await technicalStaffDB.findOne({
+      phoneNo_2: PhoneNo_2,
+    });
+
+    // Already Used Adhaar Card Numbers
+
+    const UsedScale1AdhaarNumber = await Scale1EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale2AdhaarNumber = await Scale2EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale3AdhaarNumber = await Scale3EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale4AdhaarNumber = await Scale4EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedScale5AdhaarNumber = await Scale5EmployeesDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+    const UsedTehcnicalStaffAdhaarNumber = await technicalStaffDB.findOne({
+      aadharCardNumber: AadharCardNumber,
+    });
+
+    // Already Used PAN Card Numbers
+
+    const UsedScale1PanNumber = await Scale1EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale2PanNumber = await Scale2EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale3PanNumber = await Scale3EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale4PanNumber = await Scale4EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedScale5PanNumber = await Scale5EmployeesDB.findOne({
+      panNumber: PanNumber,
+    });
+    const UsedTehcnicalStaffPanNumber = await technicalStaffDB.findOne({
+      panNumber: PanNumber,
+    });
+
+    // Already Used Job Apointment Letter Number
+
+    const UsedScale1JobAppointmentLetterNo = await Scale1EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale2JobAppointmentLetterNo = await Scale2EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale3JobAppointmentLetterNo = await Scale3EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale4JobAppointmentLetterNo = await Scale4EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedScale5JobAppointmentLetterNo = await Scale5EmployeesDB.findOne({
+      JobAppointmentLetterNo: jobAppointmentLetterNo,
+    });
+    const UsedTehcnicalStaffJobAppointmentLetterNo =
+      await technicalStaffDB.findOne({
+        JobAppointmentLetterNo: jobAppointmentLetterNo,
+      });
+
+    // Now acutal coding for registration
+    if (Password === Cpassword) {
+      if (UsedEmail1 || UsedEmail2 || UsedEmail3 || UsedEmail4 || UsedEmail5) {
+        alert("Sorry , This Email Id is already registered!");
+        console.log("Sorry , This Email Id is already registered!");
+      } else {
+        if (
+          UsedScale1PhoneNo_1 ||
+          UsedScale2PhoneNo_1 ||
+          UsedScale3PhoneNo_1 ||
+          UsedScale4PhoneNo_1 ||
+          UsedScale5PhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_1 ||
+          UsedTechnicalStaffPhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 1 is already registered! /n Please use another Phone Number."
+          );
+        } else if (
+          UsedScale1PhoneNo_2 ||
+          UsedScale2PhoneNo_2 ||
+          UsedScale3PhoneNo_2 ||
+          UsedScale4PhoneNo_2 ||
+          UsedScale5PhoneNo_2
+        ) {
+          alert(
+            "Sorry Phone Number 2 is already registered! /n Please use another Phone Number."
+          );
+        } else {
+          if (
+            UsedScale1AdhaarNumber ||
+            UsedScale2AdhaarNumber ||
+            UsedScale3AdhaarNumber ||
+            UsedScale4AdhaarNumber ||
+            UsedScale5AdhaarNumber ||
+            UsedTehcnicalStaffAdhaarNumber
+          ) {
+            alert(
+              "Sorry This Aadhar Number is already registered! /n Please use another Aadhar Number."
+            );
+          } else if (
+            UsedScale1PanNumber ||
+            UsedScale2PanNumber ||
+            UsedScale3PanNumber ||
+            UsedScale4PanNumber ||
+            UsedScale5PanNumber ||
+            UsedTehcnicalStaffPanNumber
+          ) {
+            alert(
+              "Sorry This PAN card number is already registered! /n Please use another PAN card Number."
+            );
+          } else if (
+            UsedScale1JobAppointmentLetterNo ||
+            UsedScale2JobAppointmentLetterNo ||
+            UsedScale3JobAppointmentLetterNo ||
+            UsedScale4JobAppointmentLetterNo ||
+            UsedScale5JobAppointmentLetterNo ||
+            UsedTehcnicalStaffJobAppointmentLetterNo
+          ) {
+            alert(
+              "Sorry This Job Appointment Letter is already registered! /n Please contact Hiring Department of our Bank, if it is your genuine concern."
+            );
+          } else {
+            const DateOfBirth = req.body.dateOfBirth;
+            function getAge(dateString) {
+              var today = new Date();
+              var birthDate = new Date(dateString);
+              var age = today.getFullYear() - birthDate.getFullYear();
+              var m = today.getMonth() - birthDate.getMonth();
+              if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+              }
+              return age;
+            }
+
+            const employeedata = await new technicalStaffDB({
+              bankName: req.body.bankName,
+              bankBranch: req.body.bankBranch,
+              name: req.body.name,
+              email: req.body.email,
+              phoneNo_1: req.body.phoneNo_1,
+              phoneNo_2: req.body.phoneNo_2,
+              fatherName: req.body.fatherName,
+              dateOfBirth: req.body.dateOfBirth,
+              age: getAge(DateOfBirth),
+              companyName: req.body.companyName,
+              JobAppointmentLetterNo: req.body.JobAppointmentLetterNo,
+              aadharCardNumber: req.body.aadharCardNumber,
+              panNumber: req.body.panNumber,
+              electionVoterIdNo: req.body.electionVoterIdNo,
+              country: req.body.country,
+              state: req.body.state,
+              district: req.body.district,
+              fullAddress: req.body.fullAddress,
+              postDuringJoining: req.body.postDuringJoining,
+              basicSalary: req.body.basicSalary,
+              dateOfJoining: req.body.dateOfJoining,
+              password: req.body.password,
+              photograph: req.body.photograph,
+            });
+
+            await employeedata.save();
+            console.log("Saved in Database Successfully");
+            alert(
+              "New Employee Registered Successfully! \n Please Login to Continue"
+            );
+            res.redirect("/EmployeeLogin");
+          } // Main registered Funtions ends at end here.
+        }
+      }
+    } else {
+      alert("Sorry! Password And Confirm Passwords do not match.");
+    }
   } catch (err) {
     console.log(`Error during Registering scale_1Employee --> 
             ${err}`);
@@ -676,11 +1621,10 @@ app.post("/empSearchResults", async (req, res) => {
 app.post("/reqNewSavAcc", async (req, res, next) => {
   try {
     const Password = req.body.password;
-    const Cpassword = req.body.Cpassword;
+    const Cpassword = req.body.cpassword;
     const Email = req.body.email;
     const PhoneNo_1 = req.body.phoneNo_1;
     const PhoneNo_2 = req.body.phoneNo_2;
-    const JobAppointmentLetterNo = req.body.JobAppointmentLetterNo;
     const aadharCardNumber = req.body.aadharCardNumber;
     const panNumber = req.body.panNumber;
 
@@ -690,6 +1634,29 @@ app.post("/reqNewSavAcc", async (req, res, next) => {
     const UsedSavingAccountDB = await SavingAccountsDB.findOne({
       email: Email,
     });
+    const UsedCurrentAccountDBAadharCard = await CurrentAccountsDB.findOne({
+      aadharCardNumber: aadharCardNumber,
+    });
+    const UsedSavingAccountDBAadharCard = await SavingAccountsDB.findOne({
+      aadharCardNumber: aadharCardNumber,
+    });
+    const UsedCurrentAccountDB_PANCard = await CurrentAccountsDB.findOne({
+      panNumber: panNumber,
+    });
+    const UsedSavingAccountDB_PANCard = await SavingAccountsDB.findOne({
+      panNumber: panNumber,
+    });
+
+
+    const data1 = await SavingAccountsDB.find().sort("-accountNumber").limit(1);
+    const data = JSON.stringify(data1[0].accountNumber);
+    const data2 = parseInt(data);
+
+    const data3 = await CurrentAccountsDB.find()
+      .sort("-accountNumber")
+      .limit(1);
+    const data4 = JSON.stringify(data1[0].accountNumber);
+    const data5 = parseInt(data4);
 
     // Already Used Phone Numbers
 
@@ -700,8 +1667,29 @@ app.post("/reqNewSavAcc", async (req, res, next) => {
       phoneNo_2: PhoneNo_2,
     });
 
-    const DateOfBirth = req.body.dateOfBirth;
 
+     if (UsedSavingAccountDB || UsedCurrentAccountDB) {
+      res.send(
+        "Sorry, This Email is already registered with our bank. Please return to previous page and try another email."
+      );
+    } else
+    if (UsedPhoneNo_1 || UsedPhoneNo_2) {
+      res.send(
+        "Sorry, This Phone Number is already registered with our bank. Please return to previous page and try another Phone Number."
+      );
+    }else
+    if (UsedCurrentAccountDBAadharCard || UsedSavingAccountDBAadharCard) {
+      res.send(
+        "Sorry, This Job Aadhar Card No. is already registered with our bank."
+      );
+    }else
+    if (UsedCurrentAccountDB_PANCard || UsedSavingAccountDB_PANCard) {
+      res.send(
+        "Sorry, This Job PAN Card No. is already registered with our bank."
+      );
+    }else if(Password === Cpassword){
+
+    const DateOfBirth = req.body.dateOfBirth;
     function getAge(dateString) {
       var today = new Date();
       var birthDate = new Date(dateString);
@@ -714,15 +1702,6 @@ app.post("/reqNewSavAcc", async (req, res, next) => {
     }
 
     //Account Number Creation Funtion
-    const data1 = await SavingAccountsDB.find().sort("-accountNumber").limit(1);
-    const data = JSON.stringify(data1[0].accountNumber);
-    const data2 = parseInt(data);
-
-    const data3 = await CurrentAccountsDB.find()
-      .sort("-accountNumber")
-      .limit(1);
-    const data4 = JSON.stringify(data1[0].accountNumber);
-    const data5 = parseInt(data4);
 
     const savingAccount = await new SavingAccountsDB({
       bankName: req.body.bankName,
@@ -740,6 +1719,7 @@ app.post("/reqNewSavAcc", async (req, res, next) => {
       age: getAge(DateOfBirth),
       qualification: req.body.qualification,
       occupation: req.body.occupation,
+      detailedOccupation: req.body.detailedOccupation,
       electionVoterIdNo: req.body.electionVoterIdNo,
       aadharCardNumber: req.body.aadharCardNumber,
       panNumber: req.body.panNumber,
@@ -755,7 +1735,12 @@ app.post("/reqNewSavAcc", async (req, res, next) => {
     await savingAccount.save();
 
     alert("New Employee Registered Successfully! \n Please Login to Continue");
-    res.redirect("/CustomerLogin");
+   res.redirect("/CustomerLogin");
+   } else if (Password !== Cpassword) {
+    res.send(
+      "Sorry, Password and Confirm Password don't match. Please return to previous page and try again"
+    );
+  } 
   } catch (err) {
     console.log(`Error during Request for New Saving Account --> 
             ${err}`);
@@ -764,14 +1749,13 @@ app.post("/reqNewSavAcc", async (req, res, next) => {
 
 // New Current Account Request
 
-app.post("/reqNewCurrAcc", async (req, res, next) => {
+app.post("/reqNewCurrAcc", async (req, res) => {
   try {
     const Password = req.body.password;
     const Cpassword = req.body.Cpassword;
     const Email = req.body.email;
     const PhoneNo_1 = req.body.phoneNo_1;
     const PhoneNo_2 = req.body.phoneNo_2;
-    const JobAppointmentLetterNo = req.body.JobAppointmentLetterNo;
     const aadharCardNumber = req.body.aadharCardNumber;
     const panNumber = req.body.panNumber;
 
@@ -782,6 +1766,19 @@ app.post("/reqNewCurrAcc", async (req, res, next) => {
       email: Email,
     });
 
+    const UsedCurrentAccountDBAadharCard = await CurrentAccountsDB.findOne({
+      aadharCardNumber: aadharCardNumber,
+    });
+    const UsedSavingAccountDBAadharCard = await SavingAccountsDB.findOne({
+      aadharCardNumber: aadharCardNumber,
+    });
+    const UsedCurrentAccountDB_PANCard = await CurrentAccountsDB.findOne({
+      panNumber: panNumber,
+    });
+    const UsedSavingAccountDB_PANCard = await SavingAccountsDB.findOne({
+      panNumber: panNumber,
+      });
+
     // Already Used Phone Numbers
 
     const UsedPhoneNo_1 = await CurrentAccountsDB.findOne({
@@ -791,7 +1788,31 @@ app.post("/reqNewCurrAcc", async (req, res, next) => {
       phoneNo_2: PhoneNo_2,
     });
 
+    if (UsedSavingAccountDB || UsedCurrentAccountDB) {
+          console.log(UsedSavingAccountDB);
+      res.send(
+        "Sorry, This Email is already registered with our bank. Please return to previous page and try another email."
+      );
+    } else
+    if (UsedPhoneNo_1 || UsedPhoneNo_2) {
+
+      res.send(
+        "Sorry, This Phone Number is already registered with our bank. Please return to previous page and try another Phone Number."
+      );
+    }else
+    if (UsedCurrentAccountDBAadharCard || UsedSavingAccountDBAadharCard) {
+      res.send(
+        "Sorry, This Job Aadhar Card No. is already registered with our bank."
+      );
+    }else
+    if (UsedCurrentAccountDB_PANCard || UsedSavingAccountDB_PANCard) {
+      res.send(
+        "Sorry, This Job PAN Card No. is already registered with our bank."
+      );
+    }else if(Password === Cpassword){
+
     const DateOfBirth = req.body.dateOfBirth;
+
 
     function getAge(dateString) {
       var today = new Date();
@@ -803,6 +1824,7 @@ app.post("/reqNewCurrAcc", async (req, res, next) => {
       }
       return age;
     }
+    console.log("1824");
 
     //Account Number Creation Funtion
 
@@ -816,6 +1838,8 @@ app.post("/reqNewCurrAcc", async (req, res, next) => {
       .limit(1);
     const data4 = JSON.stringify(data3[0].accountNumber);
     const data5 = parseInt(data4);
+    if (Password === Cpassword){
+      console.log("1839")
 
     const currentAccount = await new CurrentAccountsDB({
       bankName: req.body.bankName,
@@ -869,8 +1893,13 @@ app.post("/reqNewCurrAcc", async (req, res, next) => {
     await NewTransactionsLinked.save();
 
     console.log("Saved in Database Successfully");
-    alert("New Employee Registered Successfully! \n Please Login to Continue");
+    alert("New Current Account User Registered Successfully! \n Please Login to Continue");
     res.redirect("/CustomerLogin");
+  } else if (Password !== Cpassword) {
+    res.send(
+      "Sorry, Password and Confirm Password don't match. Please return to previous page and try again"
+    );
+  } }
   } catch (err) {
     console.log(`Error during Request for New Current Account --> 
             ${err}`);
@@ -904,11 +1933,15 @@ app.post("/emplogin", async (req, res) => {
   const data6 = await technicalStaffDB.findOne({
     email: Email,
   });
+  if (!data1 && !data2 && !data3 && !data4 && !data5 && !data6) {
+    alert("Sorry Either Email is incorrect or Password is incorrect");
+    res.redirect("/EmployeeLogin");
+  }
 
   if (data1) {
     const isMatch = await bcryptjs.compare(Password, data1.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data1.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -917,15 +1950,16 @@ app.post("/emplogin", async (req, res) => {
       });
 
       res.redirect("/Scale1EmpProfile");
-    } else if (isMatch == false) {
-      res.redirect("/Temp");
+    } else if (isMatch === false) {
+      alert("Sorry Either Email is incorrect or Password is incorrect");
+      res.redirect("/EmployeeLogin");
     } else {
       res.send("Sorry!");
     }
   } else if (data2) {
     const isMatch = await bcryptjs.compare(Password, data2.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data2.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -933,15 +1967,15 @@ app.post("/emplogin", async (req, res) => {
         httpOnly: true,
       });
       res.redirect("/Scale2EmpProfile");
-    } else if (isMatch == false) {
-      res.redirect("/Temp");
-    } else {
+    } else if (isMatch === false) {
+      alert("Sorry Either Email is incorrect or Password is incorrect");
+      res.redirect("/EmployeeLogin");    } else {
       res.send("Sorry!");
     }
   } else if (data3) {
     const isMatch = await bcryptjs.compare(Password, data3.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data3.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -949,15 +1983,15 @@ app.post("/emplogin", async (req, res) => {
         httpOnly: true,
       });
       res.redirect("/Scale3EmpProfile");
-    } else if (isMatch == false) {
-      res.redirect("/Temp");
-    } else {
+    } else if (isMatch === false) {
+      alert("Sorry Either Email is incorrect or Password is incorrect");
+      res.redirect("/EmployeeLogin");    } else {
       res.send("Sorry!");
     }
   } else if (data4) {
     const isMatch = await bcryptjs.compare(Password, data4.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data4.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -965,7 +1999,7 @@ app.post("/emplogin", async (req, res) => {
         httpOnly: true,
       });
       res.redirect("/Scale4EmpProfile");
-    } else if (isMatch == false) {
+    } else if (isMatch === false) {
       res.redirect("/Temp");
     } else {
       res.send("Sorry!");
@@ -973,7 +2007,7 @@ app.post("/emplogin", async (req, res) => {
   } else if (data5) {
     const isMatch = await bcryptjs.compare(Password, data5.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data5.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -981,7 +2015,7 @@ app.post("/emplogin", async (req, res) => {
         httpOnly: true,
       });
       res.redirect("/Scale5EmpProfile");
-    } else if (isMatch == false) {
+    } else if (isMatch === false) {
       res.redirect("/Temp");
     } else {
       res.send("Sorry!");
@@ -989,7 +2023,7 @@ app.post("/emplogin", async (req, res) => {
   } else if (data6) {
     const isMatch = await bcryptjs.compare(Password, data6.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data6.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -997,7 +2031,7 @@ app.post("/emplogin", async (req, res) => {
         httpOnly: true,
       });
       res.redirect("/TechnicalStaffProfile");
-    } else if (isMatch == false) {
+    } else if (isMatch === false) {
       res.redirect("/Temp");
     } else {
       res.send("Sorry!");
@@ -1037,7 +2071,7 @@ app.post("/customerlogin", async (req, res) => {
   if (data1) {
     const isMatch = await bcryptjs.compare(Password, data1.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data1.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -1046,7 +2080,7 @@ app.post("/customerlogin", async (req, res) => {
       });
 
       res.redirect("/CustomerSavingAccountsProfile");
-    } else if (isMatch == false) {
+    } else if (isMatch === false) {
       res.send("Sorry Password And Email Are Not Matched As Per Our System.");
     } else {
       res.send("Sorry!");
@@ -1054,7 +2088,7 @@ app.post("/customerlogin", async (req, res) => {
   } else if (data2) {
     const isMatch = await bcryptjs.compare(Password, data2.password);
 
-    if (isMatch == true) {
+    if (isMatch === true) {
       const token = await data2.generateAuthToken();
 
       res.cookie("cookies1", token, {
@@ -1062,7 +2096,7 @@ app.post("/customerlogin", async (req, res) => {
         httpOnly: true,
       });
       res.redirect("/CustomerCurrentAccountsProfile");
-    } else if (isMatch == false) {
+    } else if (isMatch === false) {
       res.send("Sorry Password And Email Are Not Matched As Per Our System.");
     } else {
       res.send("Sorry!");
@@ -1311,7 +2345,7 @@ app.post("/confirmSavingAccountCredit", async (req, res) => {
     await newTransaction.save();
 
     await res.redirect("/CustomerSavingCreditDebitAmount");
-  } else if (CreditUsing == "DD(DemandDraft)") {
+  } else if (CreditUsing === "DD(DemandDraft)") {
     const newTransaction = new SavingAccountTransactionsDB({
       bankName: req.body.bankName,
       bankBranch: req.body.bankBranch,
@@ -1344,7 +2378,7 @@ app.post("/confirmSavingAccountCredit", async (req, res) => {
     await newTransaction.save();
 
     await res.redirect("/CustomerSavingCreditDebitAmount");
-  } else if (CreditUsing == "Bank_Credit_General_Form/Slip") {
+  } else if (CreditUsing === "Bank_Credit_General_Form/Slip") {
     const newTransaction = new SavingAccountTransactionsDB({
       bankName: req.body.bankName,
       bankBranch: req.body.bankBranch,
@@ -1779,23 +2813,23 @@ app.post("/savingAccountNewLoan", async (req, res) => {
   const LoanType = req.body.loanType;
   let LoanPercentage;
 
-  if (LoanType == "HomeLoan") {
+  if (LoanType === "HomeLoan") {
     LoanPercentage = 9;
-  } else if (LoanType == "LoanAgainstProperty") {
+  } else if (LoanType === "LoanAgainstProperty") {
     LoanPercentage = 10;
-  } else if (LoanType == "LoanAgainstInsurance") {
+  } else if (LoanType === "LoanAgainstInsurance") {
     LoanPercentage = 10;
-  } else if (LoanType == "LoanAgainstFixedDesposit") {
+  } else if (LoanType === "LoanAgainstFixedDesposit") {
     LoanPercentage = 8;
-  } else if (LoanType == "PersonalLoan") {
+  } else if (LoanType === "PersonalLoan") {
     LoanPercentage = 12;
-  } else if (LoanType == "BusinessLoan") {
+  } else if (LoanType === "BusinessLoan") {
     LoanPercentage = 8;
-  } else if (LoanType == "EducationLoan") {
+  } else if (LoanType === "EducationLoan") {
     LoanPercentage = 5;
-  } else if (LoanType == "E-V_VehicleLoan") {
+  } else if (LoanType === "E-V_VehicleLoan") {
     LoanPercentage = 4;
-  } else if (LoanType == "Non_E-V_VehicleLoan") {
+  } else if (LoanType === "Non_E-V_VehicleLoan") {
     LoanPercentage = 7;
   }
 
@@ -1860,7 +2894,7 @@ app.post("/savingAccountNewLoan", async (req, res) => {
     SubtractedDays >= 1
   ) {
     LoanStatus = "Already Completed";
-  } else if (SubtractedYear == 0 && SubtractedMonth > 0) {
+  } else if (SubtractedYear === 0 && SubtractedMonth > 0) {
     LoanStatus = "Pending";
   }
 
@@ -1953,23 +2987,23 @@ app.post("/currentAccountNewLoan", async (req, res) => {
   const LoanType = req.body.loanType;
   let LoanPercentage;
 
-  if (LoanType == "HomeLoan") {
+  if (LoanType === "HomeLoan") {
     LoanPercentage = 9;
-  } else if (LoanType == "LoanAgainstProperty") {
+  } else if (LoanType === "LoanAgainstProperty") {
     LoanPercentage = 10;
-  } else if (LoanType == "LoanAgainstInsurance") {
+  } else if (LoanType === "LoanAgainstInsurance") {
     LoanPercentage = 10;
-  } else if (LoanType == "LoanAgainstFixedDesposit") {
+  } else if (LoanType === "LoanAgainstFixedDesposit") {
     LoanPercentage = 8;
-  } else if (LoanType == "PersonalLoan") {
+  } else if (LoanType === "PersonalLoan") {
     LoanPercentage = 12;
-  } else if (LoanType == "BusinessLoan") {
+  } else if (LoanType === "BusinessLoan") {
     LoanPercentage = 8;
-  } else if (LoanType == "EducationLoan") {
+  } else if (LoanType === "EducationLoan") {
     LoanPercentage = 5;
-  } else if (LoanType == "E-V_VehicleLoan") {
+  } else if (LoanType === "E-V_VehicleLoan") {
     LoanPercentage = 4;
-  } else if (LoanType == "Non_E-V_VehicleLoan") {
+  } else if (LoanType === "Non_E-V_VehicleLoan") {
     LoanPercentage = 7;
   }
 
@@ -2033,7 +3067,7 @@ app.post("/currentAccountNewLoan", async (req, res) => {
     SubtractedDays >= 1
   ) {
     LoanStatus = "Already Completed";
-  } else if (SubtractedYear == 0 && SubtractedMonth > 0) {
+  } else if (SubtractedYear === 0 && SubtractedMonth > 0) {
     LoanStatus = "Pending";
   }
 

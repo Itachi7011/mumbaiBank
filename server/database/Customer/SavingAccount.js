@@ -10,7 +10,7 @@ const newSavingAccountSchema = new mongoose.Schema({
         type: String,
         default : "Mumbai Bank Of India"
     },
-    backBranch:{
+    bankBranch:{
         type: String,
         default: "Shahdara"
     },
@@ -60,6 +60,9 @@ const newSavingAccountSchema = new mongoose.Schema({
         type: String,
     },
     occupation: {
+        type: String
+    },
+    detailedOccupation: {
         type: String
     },
     companyName: {
