@@ -69,6 +69,19 @@ const CustomerSavingAccountsProfile = () => {
                 >
                   {user.name}
                 </span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                <span
+                  style={{
+                    border: "3px solid red",
+                    borderRadius: "1.5rem",
+                    padding: "1rem",
+                    color: "white",
+                    background: "#FF7518",
+                    fontSize: "xxx-large",
+                  }}
+                >
+                   "{user.accountStatus}"
+                </span>
               </p>
 
               <p className="profile-div-both">
