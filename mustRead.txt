@@ -1,0 +1,2 @@
+for installing packages/node_modules  use "npm i --legacy-peer-deps" 
+don't use simple npm i or npm install , that will give webpack errors
