@@ -1,200 +1,463 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CallIcon from "@mui/icons-material/Call";
+import EmailIcon from "@mui/icons-material/Email";
+import FlagIcon from "@mui/icons-material/Flag";
+import HolidayVillageIcon from "@mui/icons-material/HolidayVillage";
+import HomeIcon from "@mui/icons-material/Home";
+import WorkIcon from "@mui/icons-material/Work";
+import SchoolIcon from "@mui/icons-material/School";
+import BoyIcon from "@mui/icons-material/Boy";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import AttachEmailIcon from "@mui/icons-material/AttachEmail";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
 
-const CustomerSavingAccountProfile = () => {
+const CustomerSavingAccountsProfile = () => {
+  const [user, setUser] = useState("");
+  const Navigate = useNavigate();
 
-    const [user, setUser] = useState("");
+  const Profile = async () => {
+    try {
+      const res = await fetch("/customerProfile", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
-    const navigate = useNavigate();
-    const Profile = async () => {
-        try {
+      const data = await res.json();
 
-            const res = await fetch("/customerProfile",
-                {
-                    method: "GET",
-                    headers: {
-                        Accept: "application/json",
-                        "Content-Type": "application/json"
-                    },
-                    credentials: "include"
-                });
+      setUser(data);
 
-            const data = await res.json();
-
-            setUser(data);
-
-            if (!res === 200) {
-                throw new Error(`Error during retreive data - ${Error}`)
-            }
-
-        } catch (err) {
-            console.log(`Error during catch of CustomerSavingAccountProfile -  ${err}`)
-        }
+      if (!res === 200) {
+        throw new Error(`Error during retreive data - ${Error}`);
+      }
+    } catch (err) {
+      console.log(`Error during catch of CustomerSavingAccountsProfile -  ${err}`);
     }
+  };
 
-    useEffect(() => {
-        Profile();
-    }, []
+  useEffect(() => {
+    Profile();
+  }, []);
 
-    )
+  return (
+    <>
+      <div
+        className="main-body profile-main-div"
+        // style={{ marginBottom: "10rem" }}
+      >
+        <div className="container" style={{ width: "100%" }}>
+          <div className="gridProfile">
+            <div className="grid1">
+              <p className="" style={{ marginBottom: "3rem" }}>
+                <span
+                  style={{
+                    border: "3px solid red",
+                    borderRadius: "1.5rem",
+                    padding: "1rem",
+                    color: "white",
+                    background: "blue",
+                    fontSize: "xxx-large",
+                  }}
+                >
+                  {user.name}
+                </span>
+              </p>
 
+              <p className="profile-div-both">
+                <span>
+                  {" "}
+                  <PersonPinIcon
+                    style={{ height: "3rem", width: "3rem" }}
+                  ></PersonPinIcon>{" "}
+                  &nbsp; Total Amount - {user.totalAmount}
+                </span>
+              </p>
+              <div className="profile-div-both ">
+                <p>
+                  <span className="fas fa-globe me-2"></span>
+                  <span className="profile-content-left">
+                    <MilitaryTechIcon
+                      style={{ height: "2rem", width: "2rem" }}
+                    ></MilitaryTechIcon>{" "}
+                    &nbsp; Account Type - 
+                  </span>
+                </p>
+                <p className="py-2 text-muted">
+                  <span className="profile-content-right">
+                    {user.accountType}
+                  </span>
+                </p>
+                <br />
+              </div>
+            </div>
+            {/* Now Grid 2 */}
+            <div className="grid2">
+              <div className="btn-primaryProfile">
+                <button
+                  style={{
+                    border: "4px solid black",
+                    textDecoration: "none",
+                    textAlign: "none",
+                    backgroundColor: "red",
+                    color: "white",
+                    padding: "1rem",
+                    fontWeight: "bold",
+                    fontSize: "larger",
+                    cursor :"pointer"
 
-    return (
-        <>
-            <div className="main-body mt-5">
-                 
-            <div className="container" style={{ width: "100%" }}>
-                        <div className="row">
+                  }}
+                  onClick={function () {
+                    Navigate("/EditEmpProfiles", {
+                      state: {
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        scale: user.scale
+                      },
+                    });
+                  }}
+                >
+                  {" "}
+                  Edit Profile{" "}
+                </button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button
+                  style={{
+                    border: "4px solid black",
+                    textDecoration: "none",
+                    textAlign: "none",
+                    backgroundColor: "red",
+                    color: "white",
+                    padding: "1rem",
+                    fontWeight: "bold",
+                    fontSize: "larger",
+                    cursor :"pointer"
+                    // Cursor:"context-menu"
+                  }}
+                  onClick={function () {
+                    Navigate("/ChangeEmpPassword", {
+                      state: {
+                        id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        scale: user.scale
+                      },
+                    });
+                  }}
+                >
+                  {" "}
+                  Change Password{" "}
+                </button>
+              </div>
 
-                            <div className="col-xl-5">
-                                <div className="row">
-                                    <div className="col-12 bg-white p-0 px-3 py-3 mb-3">
-                                        <div className="d-flex flex-column align-items-center">
+              <div className="profile-div-both3" style={{ marginTop: "0rem" }}>
+                <p className="">
+                  <span className="profile-content-left">
+                    <BoyIcon
+                      style={{ height: "3rem", width: "3rem" }}
+                    ></BoyIcon>{" "}
+                    Age -{" "}
+                  </span>{" "}
+                </p>
+                <p className="">
+                  <span className="profile-content-right">{user.age}</span>
+                </p>
+                <br />
+              </div>
+              <div className="profile-div-both3">
+                <p className="">
+                  <span className="profile-content-left">
+                    <SchoolIcon
+                      style={{
+                        height: "3rem",
+                        width: "3rem",
+                        justifyContent: "center",
+                      }}
+                    ></SchoolIcon>{" "}
+                    &nbsp; Qualifications -
+                  </span>{" "}
+                </p>
+                <p className="">
+                  <span className="profile-content-right">
+                    {user.qualification}
+                  </span>
+                </p>
+                <br />
+              </div>
+            </div>
+            
+            <div className="grid3">
+            <div className="profile-div-both2">
+                <p>
+                  <span className="profile-content-left">
+                    <AccountBalanceIcon
+                      style={{ height: "2rem", width: "2rem" }}
+                    ></AccountBalanceIcon>{" "}
+                    &nbsp; Account Number -
+                  </span>
+                </p>
+                <p className="">
+                  <span className="profile-content-right">{user.accountNumber}</span>
+                </p>
+                <br />
+              </div>
+              <div className="profile-div-both2">
+                <p>
+                  <span className="profile-content-left">
+                    <AccountBalanceIcon
+                      style={{ height: "2rem", width: "2rem" }}
+                    ></AccountBalanceIcon>{" "}
+                    &nbsp; Bank -
+                  </span>
+                </p>
+                <p className="">
+                  <span className="profile-content-right">{user.bankName}</span>
+                </p>
+                <br />
+              </div>
 
-                                            <p className="fw-bold h4 mt-3 mb-5"><span className="font-big" style={{ border: "3px solid red", borderRadius: "2em", padding: "0.7em", color: "white", background: "red" }}>{user.name}</span></p>
+              <div className=" profile-div-both2">
+                <p>
+                  <span className="fas fa-globe me-2"></span>
+                  <span className="profile-content-left">
+                    <AccountBalanceIcon
+                      style={{ height: "2rem", width: "2rem" }}
+                    ></AccountBalanceIcon>{" "}
+                    &nbsp; Branch -
+                  </span>
+                </p>
+                <p className="py-2 text-muted">
+                  <span className="profile-content-right">
+                    {user.bankBranch}
+                  </span>
+                </p>
+                <br />
+              </div>
+              
+              
+              <div className="profile-div-both2">
+                <p>
+                  <span className="fas fa-globe me-2"></span>
+                  <span className="profile-content-left">
+                    <CreditCardIcon
+                      style={{ height: "2rem", width: "2rem" }}
+                    ></CreditCardIcon>{" "}
+                    &nbsp; Aadhar No. -
+                  </span>
+                </p>
+                <p className="">
+                  <span className="profile-content-right">
+                    {user.aadharCardNumber}
+                  </span>
+                </p>
+                <br />
+              </div>
 
-                                            <p className="mb-3"><span className="font-medium">{user.district}  , {user.state} , {user.country}</span></p>
+              <div className="profile-div-both2">
+                <p>
+                  <span className="fas fa-globe me-2"></span>
+                  <span className="profile-content-left">
+                    <CreditCardIcon
+                      style={{ height: "2rem", width: "2rem" }}
+                    ></CreditCardIcon>{" "}
+                    &nbsp; PAN Number -
+                  </span>
+                </p>
+                <p className="">
+                  <span className="profile-content-right">
+                    {user.panNumber}
+                  </span>
+                </p>
+                <br />
+              </div>
+              <div className="profile-div-both2">
+                <p>
+                  <span className="fas fa-globe me-2"></span>
+                  <span className="profile-content-left">
+                    <CreditCardIcon
+                      style={{ height: "2rem", width: "2rem" }}
+                    ></CreditCardIcon>{" "}
+                    &nbsp; Election ID No. -
+                  </span>
+                </p>
+                <p className="">
+                  <span className="profile-content-right">
+                    {user.electionVoterIdNo}
+                  </span>
+                </p>
+                <br />
+              </div>
+              <div className="profile-div-both2">
+                <p>
+                  <span className="fas fa-globe me-2"></span>
+                  <span className="profile-content-left" >
+                    <DateRangeIcon
+                      style={{ height: "2rem", width: "2rem"}}
+                    ></DateRangeIcon>{" "}
+                    &nbsp; Date Of Account Opening -
+                  </span>
+                </p>
+                <p className=""  style={{backgroundColor: "red",
+                      color: "white" }}>
+                  <span className="profile-content-right"style={{float:"right", marginTop:"2rem"}}>
+                    {user.dateOfFormSubmission}
+                  </span>
+                </p>
+                <br />
+              </div>
+              <div className="profile-div-both2">
+               
+                <p className="">
+                  <span className="profile-content-right"style={{float:"right", marginTop:"2rem"}}>
+                    {user.dateOfFormSubmission}
+                  </span>
+                </p>
+                <br />
+              </div>
+            </div>
+            <div className="grid4">
+              <div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <EmailIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></EmailIcon>{" "}
+                      &nbsp; Email -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">{user.email}</span>
+                  </p>
+                  <br />
+                </div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <CallIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></CallIcon>{" "}
+                      &nbsp; Phone No. (1) -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">
+                      {user.phoneNo_1}
+                    </span>
+                  </p>
+                  <br />
+                </div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <CallIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></CallIcon>{" "}
+                      &nbsp; Phone No. (2) -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">
+                      {user.phoneNo_2}
+                    </span>
+                  </p>
+                  <br />
+                </div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <FlagIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></FlagIcon>{" "}
+                      &nbsp; Country -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">
+                      {user.country}
+                    </span>
+                  </p>
+                  <br />
+                </div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <HolidayVillageIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></HolidayVillageIcon>{" "}
+                      &nbsp; State -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">{user.state}</span>
+                  </p>
+                  <br />
+                </div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <HomeIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></HomeIcon>{" "}
+                      &nbsp; Address -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">
+                      {user.fullAddress}
+                    </span>
+                  </p>
+                  <br />
+                </div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <WorkIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></WorkIcon>{" "}
+                      &nbsp; Occupation -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">
+                      {user.occupation}
+                    </span>
+                  </p>
+                  <br />
+                </div>
+                <div className="profile-div-both3  justify-content-between border-bottom">
+                  <p className="">
+                    <span className="profile-content-left">
+                      <WorkIcon
+                        style={{ height: "2rem", width: "2rem" }}
+                      ></WorkIcon>{" "}
+                      &nbsp; Detailed Occupation -
+                    </span>{" "}
+                  </p>
+                  <p className="">
+                    <span className="profile-content-right">
+                      {user.detailedOccupation}
+                    </span>
+                  </p>
+                  <br />
+                </div>
+              </div>
+            </div>
+            <div className="grid5"></div>
+            <div className="grid6"></div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-                                            <p className="mb-3"><span className="font-medium">Account No. - {user.accountNumber}</span></p>
-
-                                        </div>
-                                    </div>
-
-                                    <div className="col-12 bg-white p-0 px-2 pb-3 mb-3">
-
-
-                                    <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fas fa-globe me-2"></span><span className="font-medium">Bank-</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.bankName}</span></p>
-
-                                        </div>
-
-
-
-                                    <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fas fa-globe me-2"></span><span className="font-medium">Branch-</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.branchName}</span></p>
-
-                                        </div>
-
-                                        <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fas fa-globe me-2"></span><span className="font-medium">Account Type -</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.accountType}</span></p>
-
-                                        </div>
-
-
-
-                                        <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fas fa-globe me-2"></span><span className="font-medium">Aadhar No.-</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.aadharCardNumber}</span></p>
-
-                                        </div>
-                                        <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fab fa-github-alt me-2"></span><span className="font-medium">PAN No.-</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.panNumber}</span></p>
-
-                                        </div>
-
-                                        <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fab fa-twitter me-2"></span><span className="font-medium">Election Voter Id. Card No.-</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.electionVoterIdNo}</span></p>
-
-                                        </div>
-
-                                        <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fab fa-twitter me-2"></span><span className="font-medium">Date Of Account Opening-</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.dateOfFormSubmission}</span></p>
-
-                                        </div>
-
-                                        <div className="d-flex justify-content-between border-bottom py-2 px-3">
-                                            <p><span className="fab fa-twitter me-2"></span><span className="font-medium">Maximum Qualification-</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.qualification}</span></p>
-
-                                        </div>
-                                        
-                                        
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div className="col-md-7 ps-md-4">
-                                <div className="row">
-                                    <div className="col-12 bg-white px-3 mb-3 pb-3">
-
-                                    <div className="d-flex ">
-                                <div className="btn btn-primary me-2" style={{ marginBottom: "1em" }}><a href="/EditEmpProfiles" style={{ textAlign: "none", color: "white", padding: "0", fontWeight: "bold", }}>Edit Profile</a></div>
-
-                            </div>
-                                        
-
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Email</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.email}</span></p>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Date Of Birth</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.dateOfBirth}</span></p>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Age</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.age}</span></p>
-                                        </div>
-
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Phone -1</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.phoneNo_1}</span></p>
-                                        </div>
-
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Phone -2</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.phoneNo_2}</span></p>
-                                        </div>
-
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Country</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium"> {user.country}</span></p>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">State</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium"> {user.state}</span></p>
-                                        </div>
-
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Full Address</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.fullAddress}</span></p>
-                                        </div>
-
-                                        
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Occupation </span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.occupation}</span></p>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-between border-bottom">
-                                            <p className="py-2"><span className="font-medium">Total Amount In Account</span></p>
-                                            <p className="py-2 text-muted"><span className="font-medium">{user.totalAmount}</span></p>
-                                        </div>
-                                        
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                 
-
-
-                
-
-
-
-
-
-        </div >
-        </>
-    )
-}
-
-export default CustomerSavingAccountProfile;
+export default CustomerSavingAccountsProfile;
