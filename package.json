@@ -1,6 +1,6 @@
 {
   "name": "banksystems_2jan2022",
-  "proxy": "http://localhost:8000",
+  "proxy": "https://rendered-backend-mumbai-bank-clone.onrender.com",
   "version": "1.0.0",
   "main": "index.js",
   "private": true,
@@ -45,8 +45,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "CI=false react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "NODE_OPTIONS='--openssl-legacy-provider' react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -72,7 +72,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "webpack": "^5.91.0",
+    "webpack": "^4.44.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^3.11.0"
   }
